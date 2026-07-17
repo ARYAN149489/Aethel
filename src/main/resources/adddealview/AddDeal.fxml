@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="adddeal.AddDeal">
+<AnchorPane prefHeight="1000.0" prefWidth="1840.0" style="-fx-background-color: #f4f6f0;">
+    <children>
+        <VBox prefHeight="1000.0" prefWidth="1840.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
+            <children>
+
+                <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="Manage Deal" />
+
+                <HBox spacing="24.0">
+                    <children>
+
+                        <!-- MAIN FORM -->
+                        <VBox spacing="16.0">
+                            <children>
+
+                                <!-- BUYER / SELLER -->
+                                <HBox spacing="18.0">
+                                    <children>
+                                        <VBox spacing="10.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Buyer Details" />
+                                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                                    <children>
+                                                        <TextField fx:id="txtBuyerMobile" prefWidth="200.0" promptText="Buyer mobile number" />
+                                                        <Button fx:id="btnFetchBuyer" onAction="#fetchBuyerName" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 7 20 7 20;" text="Fetch Buyer" />
+                                                    </children>
+                                                </HBox>
+                                                <TextField fx:id="txtBuyerName" disable="true" promptText="Buyer name" />
+                                            </children>
+                                        </VBox>
+
+                                        <VBox spacing="10.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Seller Details" />
+                                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                                    <children>
+                                                        <TextField fx:id="txtSellerMobile" prefWidth="200.0" promptText="Seller mobile number" />
+                                                        <Button fx:id="btnFetchSeller" onAction="#fetchSellerNameAndProperties" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 7 20 7 20;" text="Fetch Seller" />
+                                                    </children>
+                                                </HBox>
+                                                <TextField fx:id="txtSellerName" disable="true" promptText="Seller name" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                                <!-- PROPERTY -->
+                                <HBox alignment="CENTER_LEFT" spacing="16.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                                    <children>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Property Name" />
+                                                <ComboBox fx:id="comboPropertyName" onAction="#fillFinalAmount" prefWidth="260.0" promptText="Type to search property" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Final Amount" />
+                                                <TextField fx:id="txtFinalAmount" disable="true" prefWidth="160.0" promptText="Auto filled" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                                <!-- COMMISSION / AMOUNTS -->
+                                <VBox spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20;">
+                                    <children>
+                                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Commission &amp; Amounts" />
+
+                                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                                            <children>
+                                                <VBox spacing="4.0">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="My Commission" />
+                                                        <TextField fx:id="txtMyCommission" prefWidth="130.0" promptText="Amount" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4.0">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Adv. Commission" />
+                                                        <TextField fx:id="txtAdvCommission" prefWidth="130.0" promptText="Amount" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4.0">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Adv. Amount" />
+                                                        <TextField fx:id="txtAdvAmount" prefWidth="130.0" promptText="Amount" />
+                                                    </children>
+                                                </VBox>
+                                                <Button fx:id="btnCalculate" onAction="#calculateRemaining" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-font-weight: bold; -fx-padding: 8 14 8 14;" text="Calculate" />
+                                            </children>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                                            <children>
+                                                <VBox spacing="4.0">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Amount Left" />
+                                                        <TextField fx:id="txtAmountLeft" disable="true" prefWidth="130.0" />
+                                                    </children>
+                                                </VBox>
+                                                <VBox spacing="4.0">
+                                                    <children>
+                                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Commission Left" />
+                                                        <TextField fx:id="txtCommissionLeft" disable="true" prefWidth="130.0" />
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <!-- DATES -->
+                                <HBox alignment="CENTER_LEFT" spacing="18.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                                    <children>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Advance Given Date" />
+                                                <DatePicker fx:id="dateAdvGiven" prefWidth="160.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Registry Date" />
+                                                <DatePicker fx:id="dateRegistry" prefWidth="160.0" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+
+                                <!-- OTHER INFO + STATUS -->
+                                <GridPane hgap="16.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20;" vgap="14.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints percentWidth="100" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Other Info" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <TextField fx:id="txtOtherInfo" promptText="Any additional notes" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+                                        <HBox alignment="CENTER_LEFT" spacing="24.0" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Deal Status" />
+                                                <RadioButton fx:id="radioOngoing" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Ongoing" />
+                                                <RadioButton fx:id="radioCompleted" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Completed" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </GridPane>
+
+                            </children>
+                        </VBox>
+
+                        <!-- RIGHT: ACTIONS -->
+                        <VBox alignment="TOP_CENTER" prefWidth="190.0" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                            <children>
+                                <Button fx:id="btnSaveDeal" onAction="#saveDeal" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Save Deal" />
+                                <Button fx:id="btnClr" onAction="#clearAll" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Clear" />
+                            </children>
+                        </VBox>
+
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
+</ScrollPane>

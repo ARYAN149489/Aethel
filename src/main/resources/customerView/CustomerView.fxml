@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="customer.CustomerController">
+<AnchorPane prefHeight="660.0" prefWidth="640.0" style="-fx-background-color: linear-gradient(to bottom, #eef1f6, #e9edf3);">
+    <children>
+        <VBox layoutX="0.0" layoutY="0.0" prefHeight="660.0" prefWidth="640.0" spacing="14.0" style="-fx-padding: 26 34 22 34;">
+            <children>
+
+                <VBox spacing="2.0">
+                    <children>
+                        <Label style="-fx-font-size: 23px; -fx-font-weight: 800; -fx-text-fill: #111827;" text="Customer Master" />
+                        <Label style="-fx-font-size: 12px; -fx-text-fill: #9ca3af;" text="Search, add, or update customer records" />
+                    </children>
+                </VBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 16 14 16; -fx-effect: dropshadow(gaussian, rgba(17,24,39,0.08), 10, 0, 0, 3); -fx-border-color: #eef0f3; -fx-border-radius: 10;">
+                    <children>
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="MOBILE NUMBER" />
+                        <TextField fx:id="txtMob" prefWidth="200.0" prefHeight="34.0" promptText="10-digit mobile number" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea; -fx-padding: 0 12 0 12; -fx-font-size: 12px;" />
+                        <Button mnemonicParsing="false" onAction="#doSearch" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 12px; -fx-padding: 9 22 9 22; -fx-cursor: hand;" text="🔍  Search" />
+                    </children>
+                </HBox>
+
+                <GridPane hgap="16.0" vgap="14.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 22; -fx-effect: dropshadow(gaussian, rgba(17,24,39,0.08), 12, 0, 0, 4); -fx-border-color: #eef0f3; -fx-border-radius: 12;">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="35" />
+                        <ColumnConstraints percentWidth="30" />
+                        <ColumnConstraints percentWidth="35" />
+                    </columnConstraints>
+                    <children>
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="NAME" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="CITY" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="CUSTOMER TYPE" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+                        <TextField fx:id="txtName" prefHeight="34.0" maxWidth="Infinity" promptText="Full name" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea; -fx-padding: 0 12 0 12; -fx-font-size: 12px;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCity" prefHeight="34.0" maxWidth="Infinity" promptText="City" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea; -fx-padding: 0 12 0 12; -fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="comboType" prefHeight="34.0" maxWidth="Infinity" promptText="Select type" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="ADDRESS" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="3" />
+                        <TextField fx:id="txtAddr" prefHeight="38.0" maxWidth="Infinity" promptText="Street address" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea; -fx-padding: 0 12 0 12; -fx-font-size: 12.5px;" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="3" />
+
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="EMAIL ID" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" />
+                        <TextField fx:id="txtEmail" prefHeight="34.0" maxWidth="Infinity" promptText="name@example.com" style="-fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-radius: 8; -fx-border-color: #e2e5ea; -fx-padding: 0 12 0 12; -fx-font-size: 12px;" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" />
+                    </children>
+                </GridPane>
+
+                <VBox spacing="12.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 18 22 18 22; -fx-effect: dropshadow(gaussian, rgba(17,24,39,0.08), 12, 0, 0, 4); -fx-border-color: #eef0f3; -fx-border-radius: 12;">
+                    <children>
+                        <Label style="-fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: #6b7280;" text="DOCUMENTS" />
+                        <HBox alignment="CENTER" spacing="30.0">
+                            <children>
+
+                                <VBox alignment="CENTER" spacing="8.0">
+                                    <children>
+                                        <StackPane style="-fx-background-color: #f8fafc; -fx-background-radius: 10; -fx-border-color: #d7dbe2; -fx-border-radius: 10; -fx-border-width: 1.5; -fx-border-style: dashed; -fx-min-width: 90; -fx-min-height: 90; -fx-max-width: 90; -fx-max-height: 90;">
+                                            <children>
+                                                <ImageView fx:id="prev1" fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(17,24,39,0.12), 4, 0, 0, 2);" />
+                                            </children>
+                                        </StackPane>
+                                        <Label style="-fx-font-size: 10.5px; -fx-font-weight: bold; -fx-text-fill: #4b5563;" text="Customer Pic" />
+                                        <HBox alignment="CENTER" spacing="6.0">
+                                            <children>
+                                                <Button mnemonicParsing="false" onAction="#doBrowseImg1" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-background-radius: 20; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 6 12 6 12; -fx-cursor: hand;" text="Browse" />
+<!--                                                <Button mnemonicParsing="false" onAction="#doCaptureImg1" style="-fx-background-color: #ecfdf5; -fx-text-fill: #047857; -fx-background-radius: 20; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 6 10 6 10; -fx-cursor: hand;" text="📷" />-->
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <VBox alignment="CENTER" spacing="8.0">
+                                    <children>
+                                        <StackPane style="-fx-background-color: #f8fafc; -fx-background-radius: 10; -fx-border-color: #d7dbe2; -fx-border-radius: 10; -fx-border-width: 1.5; -fx-border-style: dashed; -fx-min-width: 90; -fx-min-height: 90; -fx-max-width: 90; -fx-max-height: 90;">
+                                            <children>
+                                                <ImageView fx:id="prev2" fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(17,24,39,0.12), 4, 0, 0, 2);" />
+                                            </children>
+                                        </StackPane>
+                                        <Label style="-fx-font-size: 10.5px; -fx-font-weight: bold; -fx-text-fill: #4b5563;" text="Aadhar Front" />
+                                        <Button mnemonicParsing="false" onAction="#doBrowseImg2" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-background-radius: 20; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 6 14 6 14; -fx-cursor: hand;" text="Browse" />
+                                    </children>
+                                </VBox>
+
+                                <VBox alignment="CENTER" spacing="8.0">
+                                    <children>
+                                        <StackPane style="-fx-background-color: #f8fafc; -fx-background-radius: 10; -fx-border-color: #d7dbe2; -fx-border-radius: 10; -fx-border-width: 1.5; -fx-border-style: dashed; -fx-min-width: 90; -fx-min-height: 90; -fx-max-width: 90; -fx-max-height: 90;">
+                                            <children>
+                                                <ImageView fx:id="prev3" fitHeight="84.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(17,24,39,0.12), 4, 0, 0, 2);" />
+                                            </children>
+                                        </StackPane>
+                                        <Label style="-fx-font-size: 10.5px; -fx-font-weight: bold; -fx-text-fill: #4b5563;" text="Aadhar Back" />
+                                        <Button mnemonicParsing="false" onAction="#doBrowseImg3" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-background-radius: 20; -fx-font-size: 10px; -fx-font-weight: bold; -fx-padding: 6 14 6 14; -fx-cursor: hand;" text="Browse" />
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <HBox alignment="CENTER" spacing="12.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#doSave" prefWidth="108.0" prefHeight="38.0" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 9; -fx-font-weight: bold; -fx-font-size: 12.5px; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.35), 8, 0, 0, 3);" text="💾  Save" />
+                        <Button mnemonicParsing="false" onAction="#doUpdate" prefWidth="108.0" prefHeight="38.0" style="-fx-background-color: #f1f3f6; -fx-text-fill: #374151; -fx-background-radius: 9; -fx-font-weight: bold; -fx-font-size: 12.5px; -fx-cursor: hand;" text="✎  Update" />
+                        <Button mnemonicParsing="false" onAction="#doDelete" prefWidth="108.0" prefHeight="38.0" style="-fx-background-color: #fee2e2; -fx-text-fill: #b91c1c; -fx-background-radius: 9; -fx-font-weight: bold; -fx-font-size: 12.5px; -fx-cursor: hand;" text="🗑  Delete" />
+                        <Button mnemonicParsing="false" onAction="#doClear" prefWidth="108.0" prefHeight="38.0" style="-fx-background-color: transparent; -fx-text-fill: #6b7280; -fx-border-color: #d1d5db; -fx-border-radius: 9; -fx-background-radius: 9; -fx-font-weight: bold; -fx-font-size: 12.5px; -fx-cursor: hand;" text="Clear" />
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
+</ScrollPane>

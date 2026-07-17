@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="1000.0" prefWidth="1840.0" style="-fx-background-color: #f4f6f0;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="listproperties.ListPropertiesController">
+    <children>
+        <VBox prefHeight="1000.0" prefWidth="1840.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
+            <children>
+
+                <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="List Properties" />
+
+                <HBox spacing="24.0">
+                    <children>
+
+                        <!-- LEFT: PROPERTY PICS -->
+                        <VBox alignment="TOP_CENTER" prefWidth="210.0" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 16;">
+                            <children>
+                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Property Pics" />
+
+                                <StackPane prefHeight="190.0" prefWidth="170.0" style="-fx-background-color: #f4f6f0; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                    <children>
+                                        <Label style="-fx-text-fill: #a9b2a0; -fx-font-size: 11px;" text="No image selected" />
+                                        <ImageView fx:id="imgViewPropPic1" fitHeight="180.0" fitWidth="160.0" preserveRatio="true" />
+                                    </children>
+                                </StackPane>
+                                <Button fx:id="btnChoosePropPic1" onAction="#doChoosePropPic1" prefWidth="140.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-background-radius: 20; -fx-font-weight: bold;" text="Choose" />
+
+                                <StackPane prefHeight="150.0" prefWidth="170.0" style="-fx-background-color: #f4f6f0; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 8; -fx-background-radius: 8;">
+                                    <children>
+                                        <Label style="-fx-text-fill: #a9b2a0; -fx-font-size: 11px;" text="Optional" />
+                                        <ImageView fx:id="imgViewPropPic2" fitHeight="140.0" fitWidth="160.0" preserveRatio="true" />
+                                    </children>
+                                </StackPane>
+                                <Button fx:id="btnChoosePropPic2" onAction="#doChoosePropPic2" prefWidth="140.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-background-radius: 20; -fx-font-weight: bold;" text="Choose" />
+                            </children>
+                        </VBox>
+
+                        <!-- MIDDLE: MAIN FORM -->
+                        <VBox spacing="16.0">
+                            <children>
+
+                                <HBox alignment="CENTER_LEFT" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 14;">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Mobile Number" />
+                                        <TextField fx:id="txtMobile" prefWidth="220.0" promptText="Enter mobile number" />
+                                        <Button fx:id="btnFetch" onAction="#fetchProperties" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 7 22 7 22;" text="Fetch" />
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Listed Properties" />
+                                        <ComboBox fx:id="comboListedProperties" onAction="#fetchPropertyDetails" prefWidth="220.0" promptText="Select a property" />
+                                    </children>
+                                </HBox>
+
+                                <GridPane hgap="16.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20;" vgap="14.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints percentWidth="34" />
+                                        <ColumnConstraints percentWidth="33" />
+                                        <ColumnConstraints percentWidth="33" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Property Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Area" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="City" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+                                        <TextField fx:id="txtPropertyName" promptText="Property name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <TextField fx:id="txtArea" promptText="Area" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="txtCity" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Location / Address" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtAddress" promptText="Full address" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                                    </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
+                                </GridPane>
+
+                                <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                                    <children>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Size (Sq.Yd)" />
+                                                <TextField fx:id="txtSize" editable="false" prefWidth="90.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Front" />
+                                                <TextField fx:id="txtFront" prefWidth="80.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Rear" />
+                                                <TextField fx:id="txtRear" prefWidth="80.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Left" />
+                                                <TextField fx:id="txtLeft" prefWidth="70.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Right" />
+                                                <TextField fx:id="txtRight" prefWidth="70.0" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4.0">
+                                            <children>
+                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Direction" />
+                                                <ComboBox fx:id="comboDirection" prefWidth="110.0" promptText="Select" />
+                                            </children>
+                                        </VBox>
+                                        <Button fx:id="btnCalculateArea" onAction="#calculateArea" style="-fx-background-color: #eef2ff; -fx-text-fill: #4338ca; -fx-font-weight: bold; -fx-padding: 8 14 8 14;" text="Calculate Area" />
+                                    </children>
+                                </HBox>
+
+                                <HBox spacing="18.0">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 16;">
+                                            <children>
+                                                <RadioButton fx:id="radioCommercial" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Commercial" />
+                                                <RadioButton fx:id="radioResidential" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Residential" />
+                                                <RadioButton fx:id="radioAgricultural" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Agricultural" />
+                                            </children>
+                                        </HBox>
+
+                                        <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 16;">
+                                            <children>
+                                                <RadioButton fx:id="radioPlot" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Plot" />
+                                                <RadioButton fx:id="radioConstructed" style="-fx-text-fill: #2f4b8a; -fx-font-weight: bold;" text="Constructed" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+
+                                <GridPane hgap="16.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20;" vgap="14.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints percentWidth="50" />
+                                        <ColumnConstraints percentWidth="50" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Approved By" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Total Price Demanded" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                        <ComboBox fx:id="comboApprovedBy" promptText="Select authority" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <TextField fx:id="txtTotalPrice" promptText="Total price" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                        <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Other Info" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txtOtherInfo" promptText="no info default" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                    </children>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
+                                </GridPane>
+
+                            </children>
+                        </VBox>
+
+                        <!-- RIGHT: ACTIONS -->
+                        <VBox alignment="TOP_CENTER" prefWidth="190.0" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
+                            <children>
+                                <Button fx:id="btnListNow" onAction="#doListNow" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="List Now" />
+                                <Button fx:id="btnUpdateDetails" onAction="#doUpdateDetails" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Update Details" />
+                                <Button fx:id="btnRemoveListing" onAction="#doRemoveListing" prefWidth="150.0" style="-fx-background-color: #fde2e2; -fx-text-fill: #b91c1c; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Remove Listing" />
+                        <Button fx:id="btnUpdateDetails1" onAction="#doClear" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Clear All" />
+                            </children>
+                        </VBox>
+
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
