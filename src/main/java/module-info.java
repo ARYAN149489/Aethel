@@ -7,6 +7,7 @@ module com.example.javaproj {
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
     requires org.apache.pdfbox;
+    requires com.github.librepdf.openpdf;
 
     opens com.example.javaproj to javafx.fxml;
     exports com.example.javaproj;
@@ -34,4 +35,10 @@ module com.example.javaproj {
 
     opens jdbcc to javafx.fxml;
     exports jdbcc;
+
+    opens allproperties to javafx.fxml;
+    exports allproperties;
+
+    opens alldeals to javafx.fxml;
+    exports alldeals;
 }

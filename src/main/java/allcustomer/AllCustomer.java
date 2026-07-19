@@ -9,6 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import allproperties.PropertyBean;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +43,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import java.util.List;
-import java.util.ArrayList;
 
 public class AllCustomer {
 
@@ -148,160 +155,104 @@ public class AllCustomer {
     @FXML
     void exportToPdf(ActionEvent event) {
         ObservableList<CustomerBean> list = tableCustomers.getItems();
-        if(list == null || list.isEmpty()){
+        if (list == null || list.isEmpty()) {
             System.out.println("No data to export....");
             return;
         }
 
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Save Customers as PDF");
-        chooser.setInitialFileName("Customers.pdf");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
-        File file = chooser.showSaveDialog(null);
-        if(file == null)
-            return;
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Save Customers as PDF");
+            chooser.setInitialFileName("Customers.pdf");
+            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
 
-        PDType1Font helvetica = new PDType1Font(Standard14Fonts.FontName.HELVETICA);
-        PDType1Font helveticaBold = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
-
-        float leftMargin = 40;
-        float rightEdge = 555;
-        float topMargin = 780;
-        float bottomMargin = 50;
-
-        float photoSize = 70;
-        float photoGap = 15;
-        float textX = leftMargin + photoSize + photoGap;
-        float textWidth = rightEdge - textX;
-        float lineHeight = 14;
-        float cardPadding = 12;
-        float cardSpacing = 14;
-        int fontSize = 10;
-
-        try(PDDocument document = new PDDocument()){
-            PDPage page = new PDPage(PDRectangle.A4);
-            document.addPage(page);
-            PDPageContentStream content = new PDPageContentStream(document, page);
-
-            content.beginText();
-            content.setFont(helveticaBold, 16);
-            content.newLineAtOffset(leftMargin, topMargin);
-            content.showText("Customer List");
-            content.endText();
-
-            float y = topMargin - 30;
-
-            for(CustomerBean c : list){
-
-                List<String> lines = new ArrayList<>();
-                lines.add("Name: " + safe(c.getName()));
-                lines.add("Mobile: " + safe(c.getMobileNumber()));
-                lines.addAll(wrapText("Email: " + safe(c.getEmail()), helvetica, fontSize, textWidth));
-                lines.addAll(wrapText("Address: " + safe(c.getAddress()), helvetica, fontSize, textWidth));
-                lines.add("City: " + safe(c.getCity()));
-                lines.add("Type: " + safe(c.getType()));
-
-                float textBlockHeight = lines.size() * lineHeight;
-                float cardContentHeight = Math.max(textBlockHeight, photoSize);
-                float cardHeight = cardContentHeight + (cardPadding * 2);
-
-                if(y - cardHeight < bottomMargin){
-                    content.close();
-                    page = new PDPage(PDRectangle.A4);
-                    document.addPage(page);
-                    content = new PDPageContentStream(document, page);
-                    y = topMargin;
-                }
-
-                float cardTop = y;
-                float cardBottom = y - cardHeight;
-
-                content.setLineWidth(0.7f);
-                content.addRect(leftMargin, cardBottom, rightEdge - leftMargin, cardHeight);
-                content.stroke();
-
-                byte[] picBytes = c.getProfilePic();
-                if(picBytes != null){
-                    PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, picBytes, "profilePic");
-                    float imgW = pdImage.getWidth();
-                    float imgH = pdImage.getHeight();
-                    float scale = Math.min(photoSize / imgW, photoSize / imgH);
-                    float drawW = imgW * scale;
-                    float drawH = imgH * scale;
-                    float imgX = leftMargin + (photoSize - drawW) / 2f;
-                    float imgY = cardTop - cardPadding - (photoSize + drawH) / 2f;
-                    content.drawImage(pdImage, imgX, imgY, drawW, drawH);
-                }
-
-                float textY = cardTop - cardPadding - fontSize;
-                for(String line : lines){
-                    content.beginText();
-                    content.setFont(helvetica, fontSize);
-                    content.newLineAtOffset(textX, textY);
-                    content.showText(line);
-                    content.endText();
-                    textY -= lineHeight;
-                }
-
-                y -= (cardHeight + cardSpacing);
+            File file = chooser.showSaveDialog(null);
+            if (file == null) {
+                return;
             }
 
-            content.close();
-            document.save(file);
-            System.out.println("Exported to PDF Successfully...");
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(file));
+            document.open();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            document.add(new Paragraph("Customer Detail"));
 
-    private List<String> wrapText(String text, PDType1Font font, float fontSize, float maxWidth) throws IOException {
-        List<String> lines = new ArrayList<>();
-        if(text == null || text.isEmpty()){
-            lines.add("");
-            return lines;
-        }
+            PdfPTable table = new PdfPTable(6);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10);
 
-        String[] words = text.split(" ");
-        StringBuilder currentLine = new StringBuilder();
-
-        for(String word : words){
-            String candidate = currentLine.length() == 0 ? word : currentLine + " " + word;
-            float candidateWidth = font.getStringWidth(candidate) / 1000f * fontSize;
-
-            if(candidateWidth <= maxWidth){
-                currentLine = new StringBuilder(candidate);
-            } else{
-                if(currentLine.length() > 0){
-                    lines.add(currentLine.toString());
-                    currentLine = new StringBuilder();
-                }
-                // word itself is wider than the column - force-break it character by character
-                if(font.getStringWidth(word) / 1000f * fontSize > maxWidth){
-                    StringBuilder piece = new StringBuilder();
-                    for(char ch : word.toCharArray()){
-                        String testPiece = piece.toString() + ch;
-                        if(font.getStringWidth(testPiece) / 1000f * fontSize > maxWidth){
-                            lines.add(piece.toString());
-                            piece = new StringBuilder();
-                        }
-                        piece.append(ch);
-                    }
-                    currentLine = new StringBuilder(piece.toString());
-                } else{
-                    currentLine = new StringBuilder(word);
-                }
+            String[] headers = {"Name", "Mobile", "Email", "Address", "City", "Type"};
+            for (String header : headers) {
+                PdfPCell headerCell = new PdfPCell(new Phrase(header));
+                headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(headerCell);
             }
+
+            for (CustomerBean data : list) {
+                table.addCell(data.getName());
+                table.addCell(String.valueOf(data.getMobileNumber()));
+                table.addCell(data.getEmail());
+                table.addCell(data.getAddress());
+                table.addCell(data.getCity());
+                table.addCell(data.getType());
+            }
+
+            document.add(table);
+            document.close();
+
+            System.out.println("Pdf Created");
+
+        } catch (Exception ep) {
+            ep.printStackTrace();
         }
-        if(currentLine.length() > 0)
-            lines.add(currentLine.toString());
-
-        return lines;
     }
 
-    private String safe(String s){
-        return s == null ? "" : s;
-    }
+//    void abc(){
+//        try {
+//
+//            FileChooser chooser = new FileChooser();
+//            chooser.setTitle("Save Customer data as Pdf");
+//            chooser.setInitialFileName("Customers.pdf");
+//            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf Files", "*.pdf"));
+//            File file = chooser.showSaveDialog(null);
+//            if(file == null)
+//                return;
+//            Document document = new Document();
+//            PdfWriter.getInstance(document,new FileOutputStream(file));
+//
+//            document.open();
+//            document.add(new Paragraph("Customer Details"));
+//            PdfPTable table=new PdfPTable(6);
+//            table.addCell("name");
+//            table.addCell("Mobile");
+//            table.addCell("Email");
+//            table.addCell("Address");
+//            table.addCell("City");
+//            table.addCell("Type");
+//
+//            for(PropertyBean data: tableProperties.getItems())
+//            {
+//                table.addCell(data.getMobileNumber());
+//                table.addCell(data.getProp_name());
+//                table.addCell(data.getAddress());
+//                table.addCell(data.getSize_dim());
+//                table.addCell(data.getApproved_by());
+//                table.addCell(data.getPrice_demanded());
+//                table.addCell(data.getOther_info());
+//            }
+//
+//            document.add(table);
+//            document.close();
+//
+//            System.out.println("Pdf. Created");
+//
+//        }
+//        catch(Exception ep)
+//        {
+//            ep.printStackTrace();
+//        }
+//    }
+
 
     @FXML
     void doShowCustomers(ActionEvent event) {
