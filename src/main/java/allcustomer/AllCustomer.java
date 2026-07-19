@@ -6,10 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import allproperties.PropertyBean;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
@@ -35,14 +33,6 @@ import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
-import java.util.List;
 
 public class AllCustomer {
 
@@ -206,53 +196,6 @@ public class AllCustomer {
             ep.printStackTrace();
         }
     }
-
-//    void abc(){
-//        try {
-//
-//            FileChooser chooser = new FileChooser();
-//            chooser.setTitle("Save Customer data as Pdf");
-//            chooser.setInitialFileName("Customers.pdf");
-//            chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf Files", "*.pdf"));
-//            File file = chooser.showSaveDialog(null);
-//            if(file == null)
-//                return;
-//            Document document = new Document();
-//            PdfWriter.getInstance(document,new FileOutputStream(file));
-//
-//            document.open();
-//            document.add(new Paragraph("Customer Details"));
-//            PdfPTable table=new PdfPTable(6);
-//            table.addCell("name");
-//            table.addCell("Mobile");
-//            table.addCell("Email");
-//            table.addCell("Address");
-//            table.addCell("City");
-//            table.addCell("Type");
-//
-//            for(PropertyBean data: tableProperties.getItems())
-//            {
-//                table.addCell(data.getMobileNumber());
-//                table.addCell(data.getProp_name());
-//                table.addCell(data.getAddress());
-//                table.addCell(data.getSize_dim());
-//                table.addCell(data.getApproved_by());
-//                table.addCell(data.getPrice_demanded());
-//                table.addCell(data.getOther_info());
-//            }
-//
-//            document.add(table);
-//            document.close();
-//
-//            System.out.println("Pdf. Created");
-//
-//        }
-//        catch(Exception ep)
-//        {
-//            ep.printStackTrace();
-//        }
-//    }
-
 
     @FXML
     void doShowCustomers(ActionEvent event) {
