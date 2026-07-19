@@ -31,4 +31,7 @@ module com.example.javaproj {
 
     opens allcustomer to javafx.fxml;
     exports allcustomer;
+
+    opens jdbcc to javafx.fxml;
+    exports jdbcc;
 }

@@ -175,7 +175,7 @@
                         <VBox alignment="TOP_CENTER" prefWidth="190.0" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 18;">
                             <children>
                                 <Button fx:id="btnUpdateDeal" onAction="#updateDeal" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Update Deal" />
-                                <Button fx:id="btnDeleteDeal" onAction="#deleteDeal" prefWidth="150.0" style="-fx-background-color: #fde2e2; -fx-text-fill: #b91c1c; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Delete Deal" />
+                                <Button fx:id="btnDeleteDeal" onAction="#cancelDeal" prefWidth="150.0" style="-fx-background-color: #fde2e2; -fx-text-fill: #b91c1c; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Cancel Deal" />
                                 <Button fx:id="btnClr" onAction="#clearAll" prefWidth="150.0" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 10 0 10 0;" text="Clear" />
                             </children>
                         </VBox>

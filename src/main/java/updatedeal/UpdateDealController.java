@@ -262,17 +262,18 @@ public class UpdateDealController {
     }
 
     @FXML
-    void deleteDeal(ActionEvent event) {
+    void cancelDeal(ActionEvent event) {
         Integer dealId = comboDealId.getSelectionModel().getSelectedItem();
         if(dealId == null){
             System.out.println("Select a Deal ID first....");
             return;
         }
         try{
-            PreparedStatement pst = con.prepareStatement("delete from Deals where DealId = ?");
-            pst.setInt(1, dealId);
+            PreparedStatement pst = con.prepareStatement("update Deals set deal_status = ? where DealId = ?");
+            pst.setString(1, "Cancelled");
+            pst.setInt(2, dealId);
             pst.executeUpdate();
-            System.out.println("Deal Deleted Successfully...");
+            System.out.println("Deal Cancelled Successfully...");
             clearAll(null);
             fetchOngoingDeals(null);
         } catch (SQLException e) {
