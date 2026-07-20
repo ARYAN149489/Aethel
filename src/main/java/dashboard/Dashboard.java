@@ -26,7 +26,7 @@ public class Dashboard {
     @FXML
     void doLogout(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginpageview/LoginPage.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -37,7 +37,7 @@ public class Dashboard {
     @FXML
     void goToAddDeal(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/adddealview/AddDeal.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -48,7 +48,7 @@ public class Dashboard {
     @FXML
     void goToAddProperty(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/addpropertyview/AddProperty.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -59,7 +59,7 @@ public class Dashboard {
     @FXML
     void goToAnalytics(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/chartview/Chart.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -70,7 +70,7 @@ public class Dashboard {
     @FXML
     void goToManageCustomer(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/customerView/CustomerView.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -81,7 +81,7 @@ public class Dashboard {
     @FXML
     void goToUpdateDeal(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/updatedealview/UpdateDeal.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -92,7 +92,7 @@ public class Dashboard {
     @FXML
     void goToUpdateProperty(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/updatepropertyview/UpdateProperty.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -102,8 +102,8 @@ public class Dashboard {
 
     @FXML
     void goToViewAllCustomers(ActionEvent event) throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/updatepropertyview/UpdateProperty.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/allcustomerview/AllCustomer.fxml")));
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -114,7 +114,7 @@ public class Dashboard {
     @FXML
     void goToViewAllDeals(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/alldealview/AllDealView.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -125,7 +125,7 @@ public class Dashboard {
     @FXML
     void goToViewAllProperties(ActionEvent event) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/allpropertiesview/AllProperties.fxml")));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();

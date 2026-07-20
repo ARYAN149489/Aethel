@@ -46,7 +46,7 @@ public class LoginPage {
             if(res.next()){
                 // System.out.println("Password verified...");
                 Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/dashboardview/Dashboard.fxml"));
-                Scene scene = new Scene(fxmlLoader, 800, 800);
+                Scene scene = new Scene(fxmlLoader);
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.show();
