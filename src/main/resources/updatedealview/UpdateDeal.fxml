@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,12 +13,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ScrollPane?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="updatedeal.UpdateDealController">
-<AnchorPane prefHeight="1000.0" prefWidth="1840.0" style="-fx-background-color: #f4f6f0;">
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="updatedeal.UpdateDealController">
+<AnchorPane prefHeight="860.0" prefWidth="850.0" style="-fx-background-color: #f4f6f0;">
     <children>
-        <VBox prefHeight="1000.0" prefWidth="1840.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
+        <VBox prefHeight="870.0" prefWidth="850.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
             <children>
 
                 <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="Update Deal" />
@@ -30,7 +30,7 @@
                             <children>
 
                                 <!-- DEAL SELECTOR -->
-                                <HBox alignment="CENTER_LEFT" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 14;">
+                                <HBox alignment="CENTER_LEFT" prefWidth="550.0" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 14;">
                                     <children>
                                         <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Deal Id (Ongoing)" />
                                         <ComboBox fx:id="comboDealId" onAction="#fetchDealDetails" prefWidth="160.0" promptText="Select Deal Id" />

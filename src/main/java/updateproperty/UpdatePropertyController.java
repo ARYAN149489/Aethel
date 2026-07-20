@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
+import emailsender.EmailSender;
 
 public class UpdatePropertyController {
 
@@ -178,10 +180,12 @@ public class UpdatePropertyController {
             pst.setString(1, txtMobile.getText());
             pst.setString(2, txtPropertyName.getText());
             pst.executeUpdate();
-            System.out.println("Deleted Successfully...");
+            // System.out.println("Deleted Successfully...");
+            MyAlert.alertMsg("Property listing removed successfully.", Alert.AlertType.INFORMATION, "Listing Removed", "Success");
             doClear();
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to remove property listing: " + e.getMessage(), Alert.AlertType.ERROR, "Removal Error", "Database Error");
         }
     }
 
@@ -207,9 +211,49 @@ public class UpdatePropertyController {
 
 
             pst.executeUpdate();
-            System.out.println("Updated Successfully...");
+
+            try {
+                PreparedStatement pstCust = con.prepareStatement("select name, email from Customers where mobileNumber = ?");
+                pstCust.setString(1, txtMobile.getText());
+                ResultSet resCust = pstCust.executeQuery();
+                if (resCust.next()) {
+                    String sellerName = resCust.getString("name");
+                    String sellerEmail = resCust.getString("email");
+                    String usageType = radioCommercial.isSelected() ? "Commercial" : (radioResidential.isSelected() ? "Residential" : "Agriculture");
+                    String statusType = radioPlot.isSelected() ? "Plot" : "Constructed";
+                    EmailSender.sendPropertyEmailAsync(
+                        "Updated",
+                        sellerEmail,
+                        sellerName,
+                        txtMobile.getText(),
+                        txtPropertyName.getText(),
+                        txtAddress.getText(),
+                        txtArea.getText(),
+                        txtCity.getText(),
+                        txtSize.getText(),
+                        txtFront.getText(),
+                        txtRear.getText(),
+                        txtLeft.getText(),
+                        txtRight.getText(),
+                        comboDirection.getSelectionModel().getSelectedItem(),
+                        usageType,
+                        statusType,
+                        comboApprovedBy.getSelectionModel().getSelectedItem(),
+                        txtTotalPrice.getText(),
+                        txtOtherInfo.getText()
+                    );
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            // System.out.println("Updated Successfully...");
+            MyAlert.alertMsg("Property details updated successfully!", Alert.AlertType.INFORMATION, "Update Successful", "Success");
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to update property details: " + e.getMessage(), Alert.AlertType.ERROR, "Update Error", "Database Error");
+        } catch (NullPointerException e) {
+            MyAlert.alertMsg("Please ensure property picture 1 is selected.", Alert.AlertType.ERROR, "Missing Picture", "Validation Error");
         }
     }
 
@@ -228,11 +272,13 @@ public class UpdatePropertyController {
                 comboListedProperties.setItems(resList);
             } else {
                 comboListedProperties.setItems(null);
-                System.out.println("No Property related to this mobile number found");
+                // System.out.println("No Property related to this mobile number found");
+                MyAlert.alertMsg("No properties found listed under mobile number: " + txtMobile.getText(), Alert.AlertType.WARNING, "No Property Found", "Search Result");
                 doClear();
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error fetching properties: " + e.getMessage(), Alert.AlertType.ERROR, "Fetch Failed", "Database Error");
         }
     }
 
@@ -304,11 +350,13 @@ public class UpdatePropertyController {
                 }
 
             } else {
-                System.out.println("no property found");
+                // System.out.println("no property found");
+                MyAlert.alertMsg("No property details found for the selected property.", Alert.AlertType.WARNING, "Property Not Found", "Search Result");
                 doClear();
             }
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error retrieving property details: " + e.getMessage(), Alert.AlertType.ERROR, "Retrieval Failed", "Database Error");
         }
     }
 
@@ -357,9 +405,6 @@ public class UpdatePropertyController {
         String[] approved = {"PUDA", "DTCP", "UDA"};
         comboApprovedBy.getItems().addAll(approved);
 
-        // These fields are only ever displayed (fetched) in the Update screen -
-        // doUpdateDetails() never writes them back to the DB, so they are locked
-        // to prevent edits that would silently be discarded.
         txtPropertyName.setDisable(true);
         txtArea.setDisable(true);
         txtCity.setDisable(true);
@@ -384,7 +429,8 @@ public class UpdatePropertyController {
     public void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database. Please verify server status.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }

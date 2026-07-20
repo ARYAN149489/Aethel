@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,15 +13,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ScrollPane?>
 
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="adddeal.AddDeal">
-<AnchorPane prefHeight="1000.0" prefWidth="1840.0" style="-fx-background-color: #f4f6f0;">
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adddeal.AddDeal">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #f4f6f0;">
     <children>
-        <VBox prefHeight="1000.0" prefWidth="1840.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
+        <VBox prefHeight="800.0" prefWidth="1000.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
             <children>
 
-                <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="Manage Deal" />
+                <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="Add Deal" />
 
                 <HBox spacing="24.0">
                     <children>

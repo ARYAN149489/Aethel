@@ -1,5 +1,6 @@
 package allcustomer;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.sql.Connection;
@@ -20,11 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -76,7 +79,8 @@ public class AllCustomer {
     void exportToExcel(ActionEvent event) {
         ObservableList<CustomerBean> list = tableCustomers.getItems();
         if(list == null || list.isEmpty()){
-            System.out.println("No data to export....");
+            // System.out.println("No data to export....");
+            MyAlert.alertMsg("No customer records currently loaded in table to export.", Alert.AlertType.WARNING, "No Data to Export", "Export Warning");
             return;
         }
 
@@ -133,12 +137,15 @@ public class AllCustomer {
 
             try(FileOutputStream fos = new FileOutputStream(file)){
                 workbook.write(fos);
+                Desktop.getDesktop().open(file);
             }
+
 
             System.out.println("Exported to Excel Successfully...");
 
         } catch (IOException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to export Excel spreadsheet: " + e.getMessage(), Alert.AlertType.ERROR, "Export Failed", "File Error");
         }
     }
 
@@ -146,7 +153,8 @@ public class AllCustomer {
     void exportToPdf(ActionEvent event) {
         ObservableList<CustomerBean> list = tableCustomers.getItems();
         if (list == null || list.isEmpty()) {
-            System.out.println("No data to export....");
+            // System.out.println("No data to export....");
+            MyAlert.alertMsg("No customer records currently loaded in table to export.", Alert.AlertType.WARNING, "No Data to Export", "Export Warning");
             return;
         }
 
@@ -189,22 +197,24 @@ public class AllCustomer {
 
             document.add(table);
             document.close();
+            Desktop.getDesktop().open(file);
 
             System.out.println("Pdf Created");
 
         } catch (Exception ep) {
             ep.printStackTrace();
+            MyAlert.alertMsg("Failed to generate PDF report: " + ep.getMessage(), Alert.AlertType.ERROR, "PDF Export Failed", "Error");
         }
     }
 
     @FXML
     void doShowCustomers(ActionEvent event) {
         if(comboCustomerType.getSelectionModel().getSelectedIndex() == -1){
-            System.out.println("Please select a customer type");
+            // System.out.println("Please select a customer type");
+            MyAlert.alertMsg("Please select a customer type filter from the dropdown.", Alert.AlertType.WARNING, "Filter Required", "Validation Error");
             return;
         }
         String type = comboCustomerType.getSelectionModel().getSelectedItem();
-//        tableCustomers.getColumns().clear();
         tableCustomers.setItems(getCustomers(type));
     }
 
@@ -231,7 +241,8 @@ public class AllCustomer {
                 list.add(new CustomerBean(mobile, name, address, city, email, type1, profilePic));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error querying customers from database: " + e.getMessage(), Alert.AlertType.ERROR, "Database Error", "Query Error");
         }
         return list;
     }
@@ -284,7 +295,8 @@ public class AllCustomer {
     public void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }

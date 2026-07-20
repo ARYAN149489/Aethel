@@ -14,6 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
+import emailsender.EmailSender;
+import java.sql.ResultSet;
 
 public class AddPropertyController {
 
@@ -138,7 +141,8 @@ public class AddPropertyController {
         String left = txtLeft.getText();
         String right = txtRight.getText();
         if(front.isEmpty() || back.isEmpty() || left.isEmpty() || right.isEmpty()){
-            System.out.println("Enter fields correctly");
+            // System.out.println("Enter fields correctly");
+            MyAlert.alertMsg("Please fill all property dimension fields (Front, Rear, Left, Right) to calculate size.", Alert.AlertType.WARNING, "Incomplete Dimensions", "Input Required");
             return false;
         }
         try{
@@ -151,7 +155,8 @@ public class AddPropertyController {
             txtSize.setText(String.valueOf(area));
             return true;
         } catch (RuntimeException e){
-            System.out.println("Invalid values to calculate area");
+            // System.out.println("Invalid values to calculate area");
+            MyAlert.alertMsg("Please enter valid numerical values for property dimensions.", Alert.AlertType.ERROR, "Invalid Number Format", "Calculation Error");
             return false;
         }
 
@@ -208,13 +213,15 @@ public class AddPropertyController {
             else if(radioResidential.isSelected()) pst.setString(12, "Residential");
             else if(radioAgricultural.isSelected()) pst.setString(12, "Agriculture");
             else{
-                System.out.println("Usage type not specified....");
+                // System.out.println("Usage type not specified....");
+                MyAlert.alertMsg("Please select a property usage type (Commercial, Residential, or Agriculture).", Alert.AlertType.WARNING, "Usage Type Required", "Validation Warning");
                 return;
             }
             if(radioPlot.isSelected()) pst.setString(13, "Plot");
             else if(radioConstructed.isSelected()) pst.setString(13, "Constructed");
             else{
-                System.out.println("Status type not specified....");
+                // System.out.println("Status type not specified....");
+                MyAlert.alertMsg("Please select a land status type (Plot or Constructed).", Alert.AlertType.WARNING, "Status Type Required", "Validation Warning");
                 return;
             }
             pst.setString(14, comboApprovedBy.getSelectionModel().getSelectedItem());
@@ -233,9 +240,49 @@ public class AddPropertyController {
             }
 
             pst.executeUpdate();
-            System.out.println("Added Successfully");
+            
+            try {
+                PreparedStatement pstCust = con.prepareStatement("select name, email from Customers where mobileNumber = ?");
+                pstCust.setString(1, txtMobile.getText());
+                ResultSet resCust = pstCust.executeQuery();
+                if (resCust.next()) {
+                    String sellerName = resCust.getString("name");
+                    String sellerEmail = resCust.getString("email");
+                    String usageType = radioCommercial.isSelected() ? "Commercial" : (radioResidential.isSelected() ? "Residential" : "Agriculture");
+                    String statusType = radioPlot.isSelected() ? "Plot" : "Constructed";
+                    EmailSender.sendPropertyEmailAsync(
+                        "Created",
+                        sellerEmail,
+                        sellerName,
+                        txtMobile.getText(),
+                        txtPropertyName.getText(),
+                        txtAddress.getText(),
+                        txtArea.getText(),
+                        txtCity.getText(),
+                        txtSize.getText(),
+                        txtFront.getText(),
+                        txtRear.getText(),
+                        txtLeft.getText(),
+                        txtRight.getText(),
+                        comboDirection.getSelectionModel().getSelectedItem(),
+                        usageType,
+                        statusType,
+                        comboApprovedBy.getSelectionModel().getSelectedItem(),
+                        txtTotalPrice.getText(),
+                        txtOtherInfo.getText()
+                    );
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            // System.out.println("Added Successfully");
+            MyAlert.alertMsg("Property listed successfully!", Alert.AlertType.INFORMATION, "Property Added", "Success");
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to add property listing. Please ensure seller mobile number is valid and picture 1 is uploaded. Error: " + e.getMessage(), Alert.AlertType.ERROR, "Save Failed", "Error");
+        } catch (NullPointerException e) {
+            MyAlert.alertMsg("Please ensure property picture 1 and mandatory selections are filled.", Alert.AlertType.ERROR, "Incomplete Data", "Validation Error");
         }
     }
 
@@ -290,7 +337,8 @@ public class AddPropertyController {
     public void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database. Please verify database server.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }

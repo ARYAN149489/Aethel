@@ -1,5 +1,6 @@
 package alldeals;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
@@ -22,9 +23,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 
 public class AllDeals {
 
@@ -54,11 +57,13 @@ public class AllDeals {
         tableDeals.getColumns().clear();
 
         if(dpFromDate.getValue() == null || dpToDate.getValue() == null){
-            System.out.println("Please select both dates");
+            // System.out.println("Please select both dates");
+            MyAlert.alertMsg("Please select both 'From Date' and 'To Date' to filter deals.", Alert.AlertType.WARNING, "Dates Required", "Validation Warning");
             return;
         }
         if(comboDealStatus.getSelectionModel().isEmpty()){
-            System.out.println("Please select a deal status");
+            // System.out.println("Please select a deal status");
+            MyAlert.alertMsg("Please select a Deal Status filter from the dropdown.", Alert.AlertType.WARNING, "Status Required", "Validation Warning");
             return;
         }
 
@@ -66,7 +71,8 @@ public class AllDeals {
         LocalDate to = dpToDate.getValue();
 
         if(from.isAfter(to)){
-            System.out.println("From date cannot be after To date");
+            // System.out.println("From date cannot be after To date");
+            MyAlert.alertMsg("'From Date' cannot be after 'To Date'. Please select a valid date range.", Alert.AlertType.ERROR, "Invalid Date Range", "Validation Error");
             return;
         }
 
@@ -177,6 +183,7 @@ public class AllDeals {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error fetching deals from database: " + e.getMessage(), Alert.AlertType.ERROR, "Database Error", "Query Error");
         }
         return list;
     }
@@ -223,6 +230,7 @@ public class AllDeals {
 
             document.add(table);
             document.close();
+            Desktop.getDesktop().open(file);
 
             System.out.println("Pdf. Created");
 
@@ -230,6 +238,7 @@ public class AllDeals {
         catch(Exception ep)
         {
             ep.printStackTrace();
+            MyAlert.alertMsg("Failed to generate PDF report: " + ep.getMessage(), Alert.AlertType.ERROR, "PDF Export Failed", "Error");
         }
 
     }
@@ -253,7 +262,8 @@ public class AllDeals {
     void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection error..");
+            // System.out.println("Database Connection error..");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database connected Successfully");
         }

@@ -1,5 +1,6 @@
 package allproperties;
 
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,11 +22,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 
 public class AllProperties {
 
@@ -66,7 +70,8 @@ public class AllProperties {
         String maxi = txtMaxPrice.getText();
 
         if(mini.isEmpty() || maxi.isEmpty()){
-            System.out.println("Please fill price ranges");
+            // System.out.println("Please fill price ranges");
+            MyAlert.alertMsg("Please fill both Min Price and Max Price range fields.", Alert.AlertType.WARNING, "Price Range Required", "Validation Warning");
             return;
         }
         float min, max;
@@ -74,11 +79,13 @@ public class AllProperties {
             min = Float.parseFloat(mini);
             max = Float.parseFloat(maxi);
         } catch(NumberFormatException e){
-            System.out.println("Please enter Number values");
+            // System.out.println("Please enter Number values");
+            MyAlert.alertMsg("Please enter valid numeric values for Min Price and Max Price.", Alert.AlertType.ERROR, "Invalid Price Format", "Validation Error");
             return;
         }
         if(comboCity.getSelectionModel().isEmpty() || comboArea.getSelectionModel().isEmpty()){
-            System.out.println("Please fill all the fields");
+            // System.out.println("Please fill all the fields");
+            MyAlert.alertMsg("Please select City and Area filters.", Alert.AlertType.WARNING, "Filters Required", "Validation Warning");
             return;
         }
 
@@ -185,7 +192,6 @@ public class AllProperties {
                 String size = String.valueOf(res.getFloat(4));
                 String appr = res.getString(5);
                 String price = String.valueOf(res.getString(6));
-                System.out.println(price);
                 String other = res.getString(7);
                 byte[] pic = res.getBytes(8);
                 PropertyBean p = new PropertyBean(mob, name, addr, size, appr, price, other, pic);
@@ -193,6 +199,7 @@ public class AllProperties {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error querying properties: " + e.getMessage(), Alert.AlertType.ERROR, "Database Error", "Query Error");
         }
         return list;
     }
@@ -213,7 +220,7 @@ public class AllProperties {
 
             document.open();
             document.add(new Paragraph("Property Detail"));
-            PdfPTable table=new PdfPTable(6);
+            PdfPTable table=new PdfPTable(7);
 
             table.addCell("Mobile");
             table.addCell("Property Name");
@@ -236,6 +243,7 @@ public class AllProperties {
 
             document.add(table);
             document.close();
+            Desktop.getDesktop().open(file);
 
             System.out.println("Pdf. Created");
 
@@ -243,6 +251,7 @@ public class AllProperties {
         catch(Exception ep)
         {
             ep.printStackTrace();
+            MyAlert.alertMsg("Failed to generate PDF report: " + ep.getMessage(), Alert.AlertType.ERROR, "PDF Export Failed", "Error");
         }
 
     }
@@ -259,7 +268,7 @@ public class AllProperties {
             while(res.next()){
                 comboArea.getItems().add(res.getString(1));
             }
-            System.out.println("Areas added...");
+            // System.out.println("Areas added...");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -289,7 +298,7 @@ public class AllProperties {
             while (res.next()){
                 comboCity.getItems().add(res.getString(1));
             }
-            System.out.println("Cities added in ComboBox");
+            // System.out.println("Cities added in ComboBox");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -300,7 +309,8 @@ public class AllProperties {
     void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection error..");
+            // System.out.println("Database Connection error..");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database connected Successfully");
         }

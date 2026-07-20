@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,11 +14,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ScrollPane?>
-<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="updateproperty.UpdatePropertyController">
-<AnchorPane prefHeight="1000.0" prefWidth="1840.0" style="-fx-background-color: #f4f6f0;">
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="updateproperty.UpdatePropertyController">
+<AnchorPane prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #f4f6f0;">
     <children>
-        <VBox prefHeight="1000.0" prefWidth="1840.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
+        <VBox prefHeight="720.0" prefWidth="1200.0" spacing="18.0" style="-fx-padding: 26 36 26 36;">
             <children>
 
                 <Label style="-fx-font-size: 24px; -fx-font-weight: 800; -fx-text-fill: #d92b2b;" text="Update Property" />
@@ -55,10 +56,10 @@
                                 <HBox alignment="CENTER_LEFT" spacing="14.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 14;">
                                     <children>
                                         <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Mobile Number" />
-                                        <TextField fx:id="txtMobile" prefWidth="220.0" promptText="Enter mobile number" />
+                                        <TextField fx:id="txtMobile" prefWidth="150.0" promptText="Enter mobile number" />
                                         <Button fx:id="btnFetch" onAction="#fetchProperties" style="-fx-background-color: #c8e6c9; -fx-text-fill: #205023; -fx-font-weight: bold; -fx-padding: 7 22 7 22;" text="Fetch" />
                                         <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Listed Properties" />
-                                        <ComboBox fx:id="comboListedProperties" onAction="#fetchPropertyDetails" prefWidth="220.0" promptText="Select a property" />
+                                        <ComboBox fx:id="comboListedProperties" onAction="#fetchPropertyDetails" prefWidth="150.0" promptText="Select a property" />
                                     </children>
                                 </HBox>
 
@@ -95,7 +96,7 @@
                                         <VBox spacing="4.0">
                                             <children>
                                                 <Label style="-fx-font-weight: bold; -fx-text-fill: #2f4b8a;" text="Size (Sq.Yd)" />
-                                                <TextField fx:id="txtSize" editable="false" disable="true" prefWidth="90.0" />
+                                                <TextField fx:id="txtSize" disable="true" editable="false" prefWidth="90.0" />
                                             </children>
                                         </VBox>
                                         <VBox spacing="4.0">
@@ -131,7 +132,7 @@
                                     </children>
                                 </HBox>
 
-                                <HBox spacing="18.0">
+                                <HBox maxWidth="900.0" minWidth="500.0" prefWidth="700.0" spacing="18.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: white; -fx-border-color: #6cbf6c; -fx-border-width: 1.5; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 16;">
                                             <children>

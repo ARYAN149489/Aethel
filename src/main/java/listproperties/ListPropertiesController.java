@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 
 public class ListPropertiesController {
 
@@ -148,7 +149,8 @@ public class ListPropertiesController {
         String left = txtLeft.getText();
         String right = txtRight.getText();
         if(front.isEmpty() || back.isEmpty() || left.isEmpty() || right.isEmpty()){
-            System.out.println("Enter fields correctly");
+            // System.out.println("Enter fields correctly");
+            MyAlert.alertMsg("Please fill all property dimension fields (Front, Rear, Left, Right) to calculate size.", Alert.AlertType.WARNING, "Incomplete Dimensions", "Input Required");
             return false;
         }
         try{
@@ -161,7 +163,8 @@ public class ListPropertiesController {
             txtSize.setText(String.valueOf(area));
             return true;
         } catch (RuntimeException e){
-            System.out.println("Invalid values to calculate area");
+            // System.out.println("Invalid values to calculate area");
+            MyAlert.alertMsg("Please enter valid numerical values for property dimensions.", Alert.AlertType.ERROR, "Invalid Number Format", "Calculation Error");
             return false;
         }
 
@@ -218,13 +221,15 @@ public class ListPropertiesController {
             else if(radioResidential.isSelected()) pst.setString(12, "Residential");
             else if(radioAgricultural.isSelected()) pst.setString(12, "Agriculture");
             else{
-                System.out.println("Usage type not specified....");
+                // System.out.println("Usage type not specified....");
+                MyAlert.alertMsg("Please select a property usage type (Commercial, Residential, or Agriculture).", Alert.AlertType.WARNING, "Usage Type Required", "Validation Warning");
                 return;
             }
             if(radioPlot.isSelected()) pst.setString(13, "Plot");
             else if(radioConstructed.isSelected()) pst.setString(13, "Constructed");
             else{
-                System.out.println("Status type not specified....");
+                // System.out.println("Status type not specified....");
+                MyAlert.alertMsg("Please select a land status type (Plot or Constructed).", Alert.AlertType.WARNING, "Status Type Required", "Validation Warning");
                 return;
             }
             pst.setString(14, comboApprovedBy.getSelectionModel().getSelectedItem());
@@ -243,9 +248,13 @@ public class ListPropertiesController {
             }
 
             pst.executeUpdate();
-            System.out.println("Added Successfully");
+            // System.out.println("Added Successfully");
+            MyAlert.alertMsg("Property listed successfully!", Alert.AlertType.INFORMATION, "Property Added", "Success");
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to add property listing: " + e.getMessage(), Alert.AlertType.ERROR, "Save Failed", "Error");
+        } catch (NullPointerException e) {
+            MyAlert.alertMsg("Please ensure property picture 1 and mandatory selections are filled.", Alert.AlertType.ERROR, "Incomplete Data", "Validation Error");
         }
     }
 
@@ -256,10 +265,12 @@ public class ListPropertiesController {
             pst.setString(1, txtMobile.getText());
             pst.setString(2, txtPropertyName.getText());
             pst.executeUpdate();
-            System.out.println("Deleted Successfully...");
+            // System.out.println("Deleted Successfully...");
+            MyAlert.alertMsg("Property listing removed successfully.", Alert.AlertType.INFORMATION, "Listing Removed", "Success");
             doClear();
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to remove property listing: " + e.getMessage(), Alert.AlertType.ERROR, "Removal Error", "Database Error");
         }
     }
 
@@ -285,9 +296,13 @@ public class ListPropertiesController {
 
 
             pst.executeUpdate();
-            System.out.println("Updated Successfully...");
+            // System.out.println("Updated Successfully...");
+            MyAlert.alertMsg("Property details updated successfully!", Alert.AlertType.INFORMATION, "Update Successful", "Success");
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to update property details: " + e.getMessage(), Alert.AlertType.ERROR, "Update Error", "Database Error");
+        } catch (NullPointerException e) {
+            MyAlert.alertMsg("Please select picture 1 to update property details.", Alert.AlertType.ERROR, "Missing Picture", "Validation Error");
         }
     }
 
@@ -306,11 +321,13 @@ public class ListPropertiesController {
                 comboListedProperties.setItems(resList);
             } else {
                 comboListedProperties.setItems(null);
-                System.out.println("No Property related to this mobile number found");
+                // System.out.println("No Property related to this mobile number found");
+                MyAlert.alertMsg("No properties found listed under mobile number: " + txtMobile.getText(), Alert.AlertType.WARNING, "No Property Found", "Search Result");
                 doClear();
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error fetching properties: " + e.getMessage(), Alert.AlertType.ERROR, "Fetch Error", "Database Error");
         }
     }
 
@@ -382,11 +399,13 @@ public class ListPropertiesController {
                 }
 
             } else {
-                System.out.println("no property found");
+                // System.out.println("no property found");
+                MyAlert.alertMsg("No property details found for the selected property.", Alert.AlertType.WARNING, "Property Not Found", "Search Result");
                 doClear();
             }
         } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error retrieving property details: " + e.getMessage(), Alert.AlertType.ERROR, "Retrieval Error", "Database Error");
         }
     }
 
@@ -445,7 +464,8 @@ public class ListPropertiesController {
     public void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }

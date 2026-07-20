@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 
 public class UpdateDealController {
 
@@ -97,7 +98,8 @@ public class UpdateDealController {
         String advComm = txtAdvCommission.getText();
         String advAmt = txtAdvAmount.getText();
         if(finalAmt.isEmpty() || myComm.isEmpty() || advComm.isEmpty() || advAmt.isEmpty()){
-            System.out.println("Enter fields correctly");
+            // System.out.println("Enter fields correctly");
+            MyAlert.alertMsg("Please fill Final Amount, My Commission, Advance Commission, and Advance Amount.", Alert.AlertType.WARNING, "Incomplete Calculation Fields", "Input Error");
             return false;
         }
         try{
@@ -113,7 +115,8 @@ public class UpdateDealController {
             txtCommissionLeft.setText(String.valueOf(commissionLeft));
             return true;
         } catch (RuntimeException e){
-            System.out.println("Invalid values to calculate remaining amount/commission");
+            // System.out.println("Invalid values to calculate remaining amount/commission");
+            MyAlert.alertMsg("Please enter valid numeric values for amounts and commissions.", Alert.AlertType.ERROR, "Invalid Number Format", "Calculation Error");
             return false;
         }
     }
@@ -154,10 +157,12 @@ public class UpdateDealController {
                 comboDealId.setItems(ids);
             } else{
                 comboDealId.setItems(null);
-                System.out.println("No ongoing deals found...");
+                // System.out.println("No ongoing deals found...");
+                MyAlert.alertMsg("No ongoing deals currently found in the database.", Alert.AlertType.INFORMATION, "No Active Deals", "Information");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error fetching ongoing deals: " + e.getMessage(), Alert.AlertType.ERROR, "Fetch Failed", "Database Error");
         }
     }
 
@@ -200,11 +205,13 @@ public class UpdateDealController {
                 else
                     radioOngoing.setSelected(true);
             } else{
-                System.out.println("No deal found for selected Deal ID");
+                // System.out.println("No deal found for selected Deal ID");
+                MyAlert.alertMsg("No deal record found for selected Deal ID.", Alert.AlertType.WARNING, "Deal Not Found", "Search Result");
                 clearAll(null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Error retrieving deal details: " + e.getMessage(), Alert.AlertType.ERROR, "Fetch Error", "Database Error");
         }
     }
 
@@ -212,16 +219,16 @@ public class UpdateDealController {
     void updateDeal(ActionEvent event) {
         Integer dealId = comboDealId.getSelectionModel().getSelectedItem();
         if(dealId == null){
-            System.out.println("Select a Deal ID first....");
+            // System.out.println("Select a Deal ID first....");
+            MyAlert.alertMsg("Please select a Deal ID from the dropdown list.", Alert.AlertType.WARNING, "Selection Required", "Validation Error");
             return;
         }
         if(radioOngoing.isSelected() == false && radioCompleted.isSelected() == false){
-            System.out.println("Deal status not specified....");
+            // System.out.println("Deal status not specified....");
+            MyAlert.alertMsg("Please specify deal status (Ongoing or Completed).", Alert.AlertType.WARNING, "Status Required", "Validation Error");
             return;
         }
         try{
-            // Advance fields (adv_commission, adv_amount, adv_given_date) are intentionally
-            // NOT part of this update - they are locked once the deal is created.
             PreparedStatement pst = con.prepareStatement(
                     "update Deals set final_amount = ?, my_commission = ?, amount_left = ?, " +
                             "commission_left = ?, registry_date = ?, other_info = ?, deal_status = ?, " +
@@ -245,19 +252,24 @@ public class UpdateDealController {
             pst.setInt(8, dealId);
 
             pst.executeUpdate();
-            System.out.println("Deal Updated Successfully...");
+            // System.out.println("Deal Updated Successfully...");
+            MyAlert.alertMsg("Deal record updated successfully!", Alert.AlertType.INFORMATION, "Deal Updated", "Success");
 
             if(status.equals("Completed")){
                 PreparedStatement pstDel = con.prepareStatement("delete from Properties where mobileNumber = ? AND prop_name = ?");
                 pstDel.setString(1, txtSellerMobile.getText());
                 pstDel.setString(2, comboPropertyName.getSelectionModel().getSelectedItem());
                 pstDel.executeUpdate();
-                System.out.println("Deal completed - property removed from listings...");
+                // System.out.println("Deal completed - property removed from listings...");
+                MyAlert.alertMsg("Deal marked as Completed! The associated property has been removed from active property listings.", Alert.AlertType.INFORMATION, "Property Removed", "Deal Finalized");
             }
 
             fetchOngoingDeals(null);
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to update deal: " + e.getMessage(), Alert.AlertType.ERROR, "Update Failed", "Database Error");
+        } catch (NumberFormatException e) {
+            MyAlert.alertMsg("Please ensure numerical fields contain valid numbers.", Alert.AlertType.ERROR, "Invalid Input", "Validation Error");
         }
     }
 
@@ -265,7 +277,8 @@ public class UpdateDealController {
     void cancelDeal(ActionEvent event) {
         Integer dealId = comboDealId.getSelectionModel().getSelectedItem();
         if(dealId == null){
-            System.out.println("Select a Deal ID first....");
+            // System.out.println("Select a Deal ID first....");
+            MyAlert.alertMsg("Please select a Deal ID to cancel.", Alert.AlertType.WARNING, "Selection Required", "Validation Error");
             return;
         }
         try{
@@ -273,11 +286,13 @@ public class UpdateDealController {
             pst.setString(1, "Cancelled");
             pst.setInt(2, dealId);
             pst.executeUpdate();
-            System.out.println("Deal Cancelled Successfully...");
+            // System.out.println("Deal Cancelled Successfully...");
+            MyAlert.alertMsg("Deal status updated to Cancelled.", Alert.AlertType.INFORMATION, "Deal Cancelled", "Success");
             clearAll(null);
             fetchOngoingDeals(null);
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to cancel deal: " + e.getMessage(), Alert.AlertType.ERROR, "Cancellation Failed", "Database Error");
         }
     }
 
@@ -314,7 +329,8 @@ public class UpdateDealController {
     void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }

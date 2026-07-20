@@ -16,6 +16,12 @@
     </properties>
 
     <dependencies>
+<!--         for mail-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 <!--        =============== for pdf and excel start dependencies ==================== -->
         <dependency>
             <groupId>com.github.librepdf</groupId>
@@ -35,7 +41,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>5.2.5</version>
+            <version>5.4.0</version>
         </dependency>
         <!--        =============== for pdf and excel end dependencies =================== -->
         <dependency>

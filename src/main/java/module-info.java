@@ -8,6 +8,8 @@ module com.example.javaproj {
     requires org.apache.poi.ooxml;
     requires org.apache.pdfbox;
     requires com.github.librepdf.openpdf;
+    requires java.desktop;
+    requires java.mail;
 
     opens com.example.javaproj to javafx.fxml;
     exports com.example.javaproj;
@@ -41,4 +43,16 @@ module com.example.javaproj {
 
     opens alldeals to javafx.fxml;
     exports alldeals;
+
+    opens loginpage to javafx.fxml;
+    exports loginpage;
+
+    opens dashboard to javafx.fxml;
+    exports dashboard;
+
+    opens chart to javafx.fxml;
+    exports chart;
+
+    opens emailsender to javafx.fxml;
+    exports emailsender;
 }

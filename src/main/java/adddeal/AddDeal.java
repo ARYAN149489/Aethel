@@ -8,12 +8,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import jdbcc.DatabaseConnection;
+import myalert.MyAlert;
 import javafx.scene.control.ScrollPane;
 
 public class AddDeal {
@@ -97,7 +99,8 @@ public class AddDeal {
         String advComm = txtAdvCommission.getText();
         String advAmt = txtAdvAmount.getText();
         if(finalAmt.isEmpty() || myComm.isEmpty() || advComm.isEmpty() || advAmt.isEmpty()){
-            System.out.println("Enter fields correctly");
+            // System.out.println("Enter fields correctly");
+            MyAlert.alertMsg("Please fill Final Amount, My Commission, Advance Commission, and Advance Amount to calculate remaining figures.", Alert.AlertType.WARNING, "Incomplete Deal Calculation Fields", "Input Error");
             return false;
         }
         try{
@@ -113,7 +116,8 @@ public class AddDeal {
             txtCommissionLeft.setText(String.valueOf(commissionLeft));
             return true;
         } catch (RuntimeException e){
-            System.out.println("Invalid values to calculate remaining amount/commission");
+            // System.out.println("Invalid values to calculate remaining amount/commission");
+            MyAlert.alertMsg("Please enter valid numeric values for deal amounts and commission.", Alert.AlertType.ERROR, "Invalid Number Format", "Calculation Error");
             return false;
         }
     }
@@ -149,10 +153,12 @@ public class AddDeal {
             if(res.next()){
                 txtBuyerName.setText(res.getString("name"));
             } else{
-                System.out.println("No user found...");
+                // System.out.println("No user found...");
+                MyAlert.alertMsg("No registered buyer found matching mobile number: " + txtBuyerMobile.getText(), Alert.AlertType.WARNING, "Buyer Not Found", "Search Result");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error fetching buyer: " + e.getMessage(), Alert.AlertType.ERROR, "Search Error", "Database Error");
         }
     }
 
@@ -168,22 +174,25 @@ public class AddDeal {
             if(res.next()){
                 txtSellerName.setText(res.getString("name"));
             } else{
-                System.out.println("No user found...");
+                // System.out.println("No user found...");
+                MyAlert.alertMsg("No registered seller found matching mobile number: " + txtSellerMobile.getText(), Alert.AlertType.WARNING, "Seller Not Found", "Search Result");
                 return;
             }
             pst = con.prepareStatement("select prop_name from Properties where mobileNumber = ?");
             pst.setString(1, txtSellerMobile.getText());
             res = pst.executeQuery();
             if(!res.next()){
-                System.out.println("No Property found...");
+                // System.out.println("No Property found...");
+                MyAlert.alertMsg("No property listings found for seller mobile number: " + txtSellerMobile.getText(), Alert.AlertType.WARNING, "No Properties Found", "Search Result");
                 return;
             }
             while(res.next()){
                 comboPropertyName.getItems().add(res.getString("prop_name"));
             }
-            System.out.println("Properties loaded successfully....");
+            // System.out.println("Properties loaded successfully....");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error fetching seller details: " + e.getMessage(), Alert.AlertType.ERROR, "Search Error", "Database Error");
         }
     }
 
@@ -199,17 +208,20 @@ public class AddDeal {
             if(res.next()){
                 txtFinalAmount.setText(res.getString("price_demanded"));
             } else{
-                System.out.println("Unable to fetch amount");
+                // System.out.println("Unable to fetch amount");
+                MyAlert.alertMsg("Unable to fetch price for selected property.", Alert.AlertType.WARNING, "Price Fetch Failed", "Error");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            MyAlert.alertMsg("Error fetching property price: " + e.getMessage(), Alert.AlertType.ERROR, "Database Error", "Error");
         }
     }
 
     @FXML
     void saveDeal(ActionEvent event) {
         if(radioOngoing.isSelected() == false && radioCompleted.isSelected() == false){
-            System.out.println("Deal status not specified....");
+            // System.out.println("Deal status not specified....");
+            MyAlert.alertMsg("Please select deal status (Ongoing or Completed).", Alert.AlertType.WARNING, "Status Required", "Validation Error");
             return;
         }
 
@@ -249,9 +261,13 @@ public class AddDeal {
             else pst.setString(15, "Completed");
 
             pst.executeUpdate();
-            System.out.println("Deal Saved Successfully");
+            // System.out.println("Deal Saved Successfully");
+            MyAlert.alertMsg("Deal saved successfully!", Alert.AlertType.INFORMATION, "Deal Registered", "Success");
         } catch (SQLException e) {
             e.printStackTrace();
+            MyAlert.alertMsg("Failed to save deal record: " + e.getMessage(), Alert.AlertType.ERROR, "Save Failed", "Database Error");
+        } catch (NumberFormatException | NullPointerException e) {
+            MyAlert.alertMsg("Please ensure all numerical fields and calculations are filled accurately.", Alert.AlertType.ERROR, "Invalid Input", "Validation Error");
         }
     }
 
@@ -285,7 +301,8 @@ public class AddDeal {
     void doConnect(){
         con = DatabaseConnection.doConnectToDb();
         if(con == null){
-            System.out.println("Database Connection Error....");
+            // System.out.println("Database Connection Error....");
+            MyAlert.alertMsg("Could not connect to MySQL database.", Alert.AlertType.ERROR, "Database Connection Failed", "Connection Error");
         } else{
             System.out.println("Database Connected Successfully...");
         }
