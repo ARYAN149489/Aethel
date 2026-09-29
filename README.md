@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏠 Aethel — Real Estate Management System
+# Aethel — Real Estate Management System
 
 ### A full-stack desktop CRM built with **JavaFX**, **MySQL**, and **Java 9 Modules** for managing customers, property listings, and real estate deals — complete with analytics, document exports, and automated email notifications.
 
@@ -14,7 +14,7 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 **Aethel** is a production-grade, modular desktop application designed for real estate agencies to digitize and streamline their day-to-day operations. It replaces traditional paper-based workflows with an intuitive JavaFX interface backed by a MySQL relational database.
 
@@ -22,15 +22,15 @@ The system covers the **complete real estate lifecycle** — from onboarding cus
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 👤 Customer Management (CRM)
+### Customer Management (CRM)
 - **Full CRUD** — Register, search, update, and delete customer profiles
 - **Document Verification** — Upload and store profile photo, Aadhar front, and Aadhar back images directly in the database as BLOBs
 - **Customer Classification** — Categorize customers as Buyer, Seller, or Both
 - **Search by Mobile** — Instant lookup using primary mobile number
 
-### 🏗️ Property Listing & Management
+### Property Listing & Management
 - **Comprehensive Listings** — Capture property name, address, city, area, dimensions (front/rear/left/right), total size, facing direction, and demanded price
 - **Auto Area Calculation** — Computes plot area from dimensional inputs using trapezoidal formula
 - **Property Classification** — Filter by Usage Type (Commercial / Residential / Agriculture) and Land Status (Plot / Constructed)
@@ -38,41 +38,41 @@ The system covers the **complete real estate lifecycle** — from onboarding cus
 - **Approval Tracking** — Track which authority approved the property (JDA, NAC, RAJ, etc.)
 - **Update & Remove Listings** — Modify pricing and details, or delist properties entirely
 
-### 🤝 Deal Tracking & Negotiation
+### Deal Tracking & Negotiation
 - **End-to-End Deal Management** — Create deals linking buyer ↔ seller ↔ property with financial terms
 - **Financial Tracking** — Record final amount, commission, advance payments, remaining balances, and commission splits
 - **Deal Lifecycle** — Track deals through Ongoing → Completed / Cancelled statuses
 - **Auto-Delist on Completion** — Properties are automatically removed from listings when a deal is marked as Completed
 - **Date Range Filtering** — Query deals by registry date range and status
 
-### 📊 Analytics Dashboard
+### Analytics Dashboard
 - **Pie Charts** — Visual breakdown of customer types (Buyer / Seller / Both)
 - **Bar Charts** — Deal status distribution (Ongoing / Completed / Cancelled)
 - Built using JavaFX `PieChart` and `BarChart` components with live database queries
 
-### 📄 Document Export
+### Document Export
 - **Excel (`.xlsx`)** — Export filtered customer records with embedded profile images using Apache POI
 - **PDF (`.pdf`)** — Generate formatted PDF reports for customers, properties, and deals using OpenPDF
 - **Auto-Open** — Exported files open automatically in the system's default application
 
-### 📧 Automated Email Notifications
+### Automated Email Notifications
 - **Customer Registration/Update** — Sends styled HTML confirmation emails with full profile details upon customer registration or profile update
 - **Property Listing/Update** — Automatically looks up the property owner's email and sends formatted HTML notifications with complete property details (dimensions, price, approval, etc.)
 - **Asynchronous Delivery** — Emails are dispatched on background threads to keep the UI responsive
 - **Smart Validation** — Email addresses are validated using `javax.mail.InternetAddress` before any send attempt
 
-### 🔐 Authentication
+### Authentication
 - Password-based admin login with MySQL-backed credential verification
 - Session management with dashboard navigation and logout functionality
 
-### 🛡️ User Experience
+### User Experience
 - **JavaFX Alert System** — Contextual UI popups (Warning, Error, Information) for every user action — replacing console-only output with interactive feedback
 - **Input Validation** — Comprehensive form validation for numeric fields, required selections, and date ranges
 - **Responsive Dashboard** — 3×3 grid-based navigation hub with icon-driven module cards
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 src/main/java/
@@ -122,7 +122,7 @@ src/main/resources/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology | Version |
 |---|---|---|
@@ -139,7 +139,7 @@ src/main/resources/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -251,7 +251,7 @@ String appPassword = "your-app-password";
 
 ---
 
-## 📂 Module Breakdown
+## Module Breakdown
 
 | Module | Screens | Key Operations |
 |---|---|---|
@@ -271,7 +271,7 @@ String appPassword = "your-app-password";
 
 ---
 
-## 🧰 Skills & Concepts Demonstrated
+## Skills & Concepts Demonstrated
 
 - **Object-Oriented Design** — Modular package architecture with separation of concerns
 - **Java 9 Module System (JPMS)** — Explicit module boundaries with `requires`, `opens`, and `exports`
@@ -285,7 +285,7 @@ String appPassword = "your-app-password";
 
 ---
 
-## 📜 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
@@ -293,6 +293,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-**Built with ☕ Java and ❤️ by Aryan Kansal**
+**Built with Java by Aryan Kansal**
 
 </div>
